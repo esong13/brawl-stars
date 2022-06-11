@@ -6,6 +6,8 @@
 USING_NS_CC;
 
 class SwordMan : public HeroSprite {
+
+
 public:
 	//创建和初始化
 	CREATE_FUNC(SwordMan);

@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "Const.h"
 USING_NS_CC;
 using namespace cocos2d::ui;
 
@@ -18,6 +19,7 @@ class Item : public cocos2d::Node {
 	CC_SYNTHESIZE(bool, isDead, IsDead);
 
 public:
+
 	//精灵
 	void bindSprite(Sprite* sprite);//绑定精灵
 
@@ -26,6 +28,7 @@ public:
 	Slider* createHealthBar();
 	Slider* setHealth(int health);
 	Slider* healthBar;
+	void addHealthBar();
 
 
 	//受伤

@@ -3,15 +3,25 @@
 
 #include "cocos2d.h"
 #include "Item.h"
+#include "ui/CocosGUI.h"
+#include "Bullet.h"
 USING_NS_CC;
+using namespace cocos2d::ui;
 
 
 class HeroSprite :public Item {
 	//攻击力
 	CC_SYNTHESIZE(int, attackNum, AttackNum);
-	//MP(弹药)
-	CC_SYNTHESIZE(int, magicPointMax, MagicPointMax);//弹药上限
-	CC_SYNTHESIZE(int, magicPointNow, MagicPointNow);//当前弹药量
+	//子弹量
+	CC_SYNTHESIZE(int, bulletMax, BulletMax);//弹药上限
+	CC_SYNTHESIZE(int, bulletNow, BulletNow);//当前弹药量
+
+	//大招能量
+	CC_SYNTHESIZE(int, skillEnergyNow, SkillEnergyNow);//当前大招能量
+	CC_SYNTHESIZE(int, skillEnergyMax, SkillEnergyMax);//大招能量上限
+
+	//移速
+	CC_SYNTHESIZE(int, moveSpeed, MoveSpeed);//大招能量上限
 
 public:
 	//创建和初始化
@@ -21,16 +31,23 @@ public:
 	//移动部分
 	bool isRun;//是否在运动
 	int direction;//运动方向
-	Point position;//精灵的位置
 	virtual void heroSetAction(int direction, int num);//多态 不同英雄的移动
-	void heroMoveTo(float x, float y);//移动到
+	void heroMoveTo(float x, float y,float heroSpeed);//移动到
 
 	//攻击部分
 	virtual void attack(Point targetPosition);
 
 
-	//MP部分
-	void setMagicBar(int magic);
+	//弹药部分
+	Slider* createBulletBar();
+	Slider* setBullet(int health);
+	Slider* bulletBar;
+	void addBulletBar();
+
+	//已发射的子弹
+	Vector<Bullet*> bulletHasBeenShot;
+	void update(float dt)override;
+
 protected:
 	//移动部分
 	Animate* createAnimate(int direction, const char* name, int num);//移动动画

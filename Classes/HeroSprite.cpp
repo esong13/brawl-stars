@@ -2,35 +2,62 @@
 
 //初始化
 bool HeroSprite::init(){
+
 	if (!Item::init()) return false;
+
 	this->isRun = false;
 	this->direction = 1;
-	setMagicPointMax(3);
-	setMagicPointNow(3);
-	setPower(1);
+	setBulletMax(3);
+	setBulletNow(3);
 	setIsDead(false);
+	this->scheduleUpdate();
+
 	return true;
 }
 
-//
+//父函数
 void HeroSprite::heroSetAction(int direction, int num){
 	setAction(direction, "sword_man", num);
 }
 
 //移动到
-void HeroSprite::heroMoveTo(float x, float y) {
+void HeroSprite::heroMoveTo(float x, float y,float heroSpeed) {
 	float r = sqrt(x * x + y * y);
-	position.x += x / r;
-	position.y += y / r;
-	roleSprite->setPosition(position);
+	getRoleSprite()->setPosition(getRoleSprite()->getPosition()+Point((x / r) , (y / r) )* heroSpeed);
 }
 
-void HeroSprite::setMagicBar(int magic)
+//创建弹药条
+Slider* HeroSprite::createBulletBar()
 {
-
-
-
+	Slider* slider = Slider::create();
+	slider->loadBarTexture("sliderTrack.png");
+	slider->loadProgressBarTexture("sliderProgress.png");
+	slider->setPercent(100);
+	return slider;
 }
+//更新弹药条状态
+Slider* HeroSprite::setBullet(int bullet)
+{
+	if (bullet >= 0 && bullet <= bulletMax)
+	{
+		setBulletNow(bullet);
+	}
+	Slider* slider = Slider::create();
+	slider->loadBarTexture("sliderTrack.png");
+	slider->loadProgressBarTexture("sliderProgress.png");
+	slider->setPercent(100.0f * bulletNow / bulletMax);
+	return slider;
+}
+
+void HeroSprite::addBulletBar()
+{
+	//创建并显示弹药条
+	bulletBar = createBulletBar();
+	bulletBar->setPosition(Point(getRoleSprite()->getPosition().x + 6, getRoleSprite()->getPosition().y + 24));
+	bulletBar->setScale(0.1f, 0.3f);
+	getRoleSprite()->addChild(bulletBar);
+}
+
 
 //产生Animate
 Animate* HeroSprite::createAnimate(int direction, const char* name, int num)
@@ -71,6 +98,22 @@ void HeroSprite::setAction(int direction, const char* name, int num)
 void HeroSprite::attack(Point targetPosition)
 {
 
-	magicPointNow--;//弹药减少
-	setMagicBar(magicPointNow);//设置弹药条
+	//bulletNow--;//弹药减少
+	setBullet(bulletNow);//设置弹药条
+}
+
+//存储子弹的定时器
+void HeroSprite::update(float dt)
+{
+	
+	//判断已发射子弹是否到达终点清除
+	for (int i = 0; i < bulletHasBeenShot.size(); i++){
+		auto bullet = bulletHasBeenShot.at(i);
+		if (bullet->getBulletSprite()->getPosition() == bullet->getBulletTerminal()) {
+			bulletHasBeenShot.erase(i);
+			removeChild(bullet, true);
+			continue;
+		}
+
+	}
 }

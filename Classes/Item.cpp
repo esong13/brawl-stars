@@ -2,26 +2,18 @@
 
 
 void Item::bindSprite(Sprite* sprite){
-	roleSprite = sprite;
+	setRoleSprite(sprite);
 	addChild(roleSprite);
-
-	//创建血条
-	healthBar = createHealthBar();
-	healthBar->setPosition(Point(roleSprite->getPosition().x+6, roleSprite->getPosition().y + 26));
-	healthBar->setScale(0.1f,0.5f);
-	roleSprite->addChild(healthBar);
-
-
 }
 
-//创建血条
+//血条
 Slider* Item::createHealthBar()
 {
-	Slider* healthBar = Slider::create();
-	healthBar -> loadBarTexture("sliderTrack.png");
-	healthBar -> loadProgressBarTexture("sliderProgress.png");
-	healthBar -> setPercent(100);
-	return healthBar;
+	Slider* slider = Slider::create();
+	slider-> loadBarTexture("sliderTrack.png");
+	slider-> loadProgressBarTexture("sliderProgress.png");
+	slider-> setPercent(100);
+	return slider;
 }
 //更新血条状态
 Slider* Item::setHealth(int health)
@@ -30,11 +22,20 @@ Slider* Item::setHealth(int health)
 	{
 		setHealthPointNow(health);
 	}
-	Slider* healthBar = Slider::create();
-	healthBar -> loadBarTexture("sliderTrack.png");
-	healthBar -> loadProgressBarTexture("sliderProgress.png");
-	healthBar -> setPercent(100.0f * healthPointNow / healthPointMax);
-	return healthBar;
+	Slider* slider = Slider::create();
+	slider-> loadBarTexture("sliderTrack.png");
+	slider-> loadProgressBarTexture("sliderProgress.png");
+	slider-> setPercent(100.0f * healthPointNow / healthPointMax);
+	return slider;
+}
+
+void Item::addHealthBar()
+{
+	//创建并更新血条
+	healthBar = createHealthBar();
+	healthBar->setPosition(Point(getRoleSprite()->getPosition().x + 6, getRoleSprite()->getPosition().y + 26));
+	healthBar->setScale(0.1f, 0.5f);
+	getRoleSprite()->addChild(healthBar);
 }
 
 bool Item::Wounded(int damage)
@@ -48,9 +49,6 @@ bool Item::Wounded(int damage)
 
 	//还活着则更新血量状态
 	setHealth(healthPointNow);
-
-	//停止伤害
-	//...
 
 	return true;
 }

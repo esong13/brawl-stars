@@ -35,11 +35,15 @@ bool MyWorld::init()
     //rocker->startRocker(true);
 
     hero = SwordMan::create();
-    hero->setPosition(100, 100);
     hero->bindSprite(Sprite::create("SpirtOne/sword_man/sword_man1-1.png"));
+    hero->setPosition(ROLENODE_POSITION_X, ROLENODE_POSITION_X);
     addChild(hero);
+    hero->addBulletBar();
+    hero->addHealthBar();
     hero->heroSetAction(hero->direction, 1);
     
+    hero->attack(hero->getPosition() + Point(20, 20)+ hero->getRoleSprite()->getPosition());//测试
+
     /*
 	//创建一个精灵
 	Sprite* sprite = Sprite::create("barn-owl.png");
@@ -71,10 +75,9 @@ bool MyWorld::init()
 
 
     //hero->Dead();
+    
 
 
-
-    hero->createHealthBar();
     this->scheduleUpdate();
     auto keyListener = EventListenerKeyboard::create();
 
@@ -123,7 +126,6 @@ void MyWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 
 void MyWorld::update(float dt)
 {
-
     log("1");
     if (hero->getIsDead()) {
         return;
@@ -132,6 +134,7 @@ void MyWorld::update(float dt)
     auto s = EventKeyboard::KeyCode::KEY_S;
     auto a = EventKeyboard::KeyCode::KEY_A;
     auto d = EventKeyboard::KeyCode::KEY_D;
+    auto j = EventKeyboard::KeyCode::KEY_J;
     int offsetx = 0;
     int offsety = 0;
     if (keyMap[a])
@@ -149,6 +152,10 @@ void MyWorld::update(float dt)
     if (keyMap[s])
     {
         offsety = -1;
+    }
+    if (keyMap[j])
+    {
+        hero->attack(hero->getPosition()+Point(offsetx, offsety)+hero->getRoleSprite()->getPosition());
     }
     if (offsetx == 0 && offsety == 0) {
         hero->isRun = false;
@@ -180,5 +187,5 @@ void MyWorld::update(float dt)
             hero->heroSetAction(hero->direction, 4);
         }
     }
-    hero->heroMoveTo(offsetx, offsety);
+    hero->heroMoveTo(offsetx, offsety, hero->getMoveSpeed());
 }
