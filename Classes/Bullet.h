@@ -21,7 +21,7 @@ public:
 
 	//绑定精灵
 	void bindSprite(Sprite* sprite);
-	//移动
+	//子弹位移，position为触屏的地方，参考坐标为世界坐标
 	virtual void bulletMoveTo(Point position);
 
 	//碰撞

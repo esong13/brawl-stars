@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "HeroSprite.h"
 USING_NS_CC;
+using namespace cocostudio::timeline;
 
 class SwordMan : public HeroSprite {
 
@@ -15,6 +16,6 @@ public:
 	//ÒÆ¶¯
 	void heroSetAction(int direction, int num);
 	//¹¥»÷
-	virtual void attack(Point targetPosition);
+	void attack(Point targetPosition);
 };
 #endif

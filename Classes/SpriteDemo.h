@@ -11,6 +11,8 @@ USING_NS_CC;
 class MyWorld : public cocos2d::Layer {
 public:
 	SwordMan* hero;
+	bool heroIsDead;
+
 	static cocos2d::Scene* createScene();
 	virtual bool init();
 	CREATE_FUNC(MyWorld);
@@ -23,6 +25,8 @@ public:
 	//void EnterSoundSet(Ref* p);
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;
 	void update(float dt);
+
+	void attackUpdate(float dt);
 };
 
 #endif

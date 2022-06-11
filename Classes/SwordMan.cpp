@@ -18,9 +18,11 @@ void SwordMan::heroSetAction(int direction, int num)
 
 void SwordMan::attack(Point targetPosition)
 {
-	//若没有弹药则无法攻击
-	if (getBulletNow() <= 0)  return;
-
+	if (getBulletNow() <= 0 || attackIsColding) {
+		return;
+	}
+	//攻击冷却
+	//attackIsColding = true;
 	//调用父类函数
 	HeroSprite::attack(targetPosition);
 

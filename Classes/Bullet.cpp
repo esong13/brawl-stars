@@ -26,6 +26,10 @@ void Bullet::bulletMoveTo(Point position) {
 	else if(dx==0&&dy>0){
 		getBulletSprite()->setRotation(180.0f);
 	}
+	else if (dx == 0 && dy == 0) {//若刚好点到英雄原点则设置默认攻击方向
+		dy = -1;
+		r = 1;
+	}
 	setBulletTerminal(getBulletSprite()->getPosition()+Point((dx / r) * getBulletDistance(), (dy / r) * getBulletDistance()));
 	auto moveBy = MoveBy::create(2.0/ getBulletSpeed(), Point((dx / r) * getBulletDistance(), (dy / r) * getBulletDistance()));
 	getBulletSprite()->runAction(moveBy);

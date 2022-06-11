@@ -1,6 +1,5 @@
 #ifndef _CONST_H_
 #define _CONST_H_
-
 #define Pi 3.1415926
 enum hero_direction
 {

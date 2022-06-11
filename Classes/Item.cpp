@@ -16,22 +16,18 @@ Slider* Item::createHealthBar()
 	return slider;
 }
 //更新血条状态
-Slider* Item::setHealth(int health)
+void Item::setHealth(Slider* theHealthBar,int health)
 {
 	if (health >= 0 && health <= healthPointMax)
 	{
 		setHealthPointNow(health);
 	}
-	Slider* slider = Slider::create();
-	slider-> loadBarTexture("sliderTrack.png");
-	slider-> loadProgressBarTexture("sliderProgress.png");
-	slider-> setPercent(100.0f * healthPointNow / healthPointMax);
-	return slider;
+	theHealthBar-> setPercent(100.0f * healthPointNow / healthPointMax);
 }
 
 void Item::addHealthBar()
 {
-	//创建并更新血条
+	//创建血条
 	healthBar = createHealthBar();
 	healthBar->setPosition(Point(getRoleSprite()->getPosition().x + 6, getRoleSprite()->getPosition().y + 26));
 	healthBar->setScale(0.1f, 0.5f);
@@ -47,22 +43,22 @@ bool Item::Wounded(int damage)
 		return true;
 	}//死亡
 
-	//还活着则更新血量状态
-	setHealth(healthPointNow);
+	//还活着则更新血条
+	setHealth(healthBar, healthPointNow);
 
-	return true;
+	return false;
 }
 
 void Item::Dead()
 {
-	//掉落能量
-	auto powerFalled = Sprite::create("power.png");
-	powerFalled->setPosition(getPosition());
-	getParent()->addChild(powerFalled, 1);
+	//通过能量多少判断掉落多少能量
+	for (int i = 1; i <= (getPower() - 1) / 2 + 1;++i) {
+		Sprite* powerFalled = Sprite::create("power.png");
+		powerFalled->setPosition(getPosition()+getRoleSprite()->getPosition());
+		getParent()->addChild(powerFalled);
+	}
 
-
-	//从屏幕中移除自己
+	//移除自己
 	this->removeFromParent();
-	isDead = true;
 }
 

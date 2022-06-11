@@ -41,8 +41,12 @@ bool MyWorld::init()
     hero->addBulletBar();
     hero->addHealthBar();
     hero->heroSetAction(hero->direction, 1);
-    
+    this->heroIsDead = false;
+    //test
+
     hero->attack(hero->getPosition() + Point(20, 20)+ hero->getRoleSprite()->getPosition());//测试
+
+    schedule(CC_SCHEDULE_SELECTOR(MyWorld::attackUpdate),2,40, 2.0f);
 
     /*
 	//创建一个精灵
@@ -127,7 +131,7 @@ void MyWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 void MyWorld::update(float dt)
 {
     log("1");
-    if (hero->getIsDead()) {
+    if (heroIsDead) {
         return;
     }
     auto w = EventKeyboard::KeyCode::KEY_W;
@@ -135,6 +139,7 @@ void MyWorld::update(float dt)
     auto a = EventKeyboard::KeyCode::KEY_A;
     auto d = EventKeyboard::KeyCode::KEY_D;
     auto j = EventKeyboard::KeyCode::KEY_J;
+    auto q = EventKeyboard::KeyCode::KEY_Q;
     int offsetx = 0;
     int offsety = 0;
     if (keyMap[a])
@@ -156,6 +161,12 @@ void MyWorld::update(float dt)
     if (keyMap[j])
     {
         hero->attack(hero->getPosition()+Point(offsetx, offsety)+hero->getRoleSprite()->getPosition());
+    }
+    if (keyMap[q])
+    {
+        hero->Dead();
+        heroIsDead = true;
+        return;
     }
     if (offsetx == 0 && offsety == 0) {
         hero->isRun = false;
@@ -188,4 +199,9 @@ void MyWorld::update(float dt)
         }
     }
     hero->heroMoveTo(offsetx, offsety, hero->getMoveSpeed());
+}
+
+void MyWorld::attackUpdate(float dt)
+{
+    hero->setBullet(hero->bulletBar, hero->getBulletNow() + 1);
 }

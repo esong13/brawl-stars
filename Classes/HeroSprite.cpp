@@ -7,11 +7,10 @@ bool HeroSprite::init(){
 
 	this->isRun = false;
 	this->direction = 1;
-	setBulletMax(3);
-	setBulletNow(3);
-	setIsDead(false);
+	setBulletMax(3);//弹药上限
+	setBulletNow(3);//当前弹药
 	this->scheduleUpdate();
-
+	attackIsColding = false;//未在冷却中
 	return true;
 }
 
@@ -36,17 +35,13 @@ Slider* HeroSprite::createBulletBar()
 	return slider;
 }
 //更新弹药条状态
-Slider* HeroSprite::setBullet(int bullet)
+void HeroSprite::setBullet(Slider* theBulletBar,int bullet)
 {
 	if (bullet >= 0 && bullet <= bulletMax)
 	{
 		setBulletNow(bullet);
 	}
-	Slider* slider = Slider::create();
-	slider->loadBarTexture("sliderTrack.png");
-	slider->loadProgressBarTexture("sliderProgress.png");
-	slider->setPercent(100.0f * bulletNow / bulletMax);
-	return slider;
+	theBulletBar->setPercent(100.0f * bulletNow / bulletMax);
 }
 
 void HeroSprite::addBulletBar()
@@ -98,22 +93,33 @@ void HeroSprite::setAction(int direction, const char* name, int num)
 void HeroSprite::attack(Point targetPosition)
 {
 
-	//bulletNow--;//弹药减少
-	setBullet(bulletNow);//设置弹药条
+
+	bulletNow--;//弹药减少
+	setBullet(bulletBar,bulletNow);//设置弹药条
 }
 
-//存储子弹的定时器
+
+
+
+
+//定时器
 void HeroSprite::update(float dt)
 {
 	
 	//判断已发射子弹是否到达终点清除
+
 	for (int i = 0; i < bulletHasBeenShot.size(); i++){
-		auto bullet = bulletHasBeenShot.at(i);
+		Bullet* bullet = bulletHasBeenShot.at(i);
 		if (bullet->getBulletSprite()->getPosition() == bullet->getBulletTerminal()) {
 			bulletHasBeenShot.erase(i);
 			removeChild(bullet, true);
 			continue;
 		}
-
 	}
+	//判断子弹是否碰撞。。
+
+	//判断是否可能拾取buff
+
+
+
 }

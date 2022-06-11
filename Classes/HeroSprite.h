@@ -21,7 +21,7 @@ class HeroSprite :public Item {
 	CC_SYNTHESIZE(int, skillEnergyMax, SkillEnergyMax);//大招能量上限
 
 	//移速
-	CC_SYNTHESIZE(int, moveSpeed, MoveSpeed);//大招能量上限
+	CC_SYNTHESIZE(int, moveSpeed, MoveSpeed);//移动速度
 
 public:
 	//创建和初始化
@@ -36,18 +36,22 @@ public:
 
 	//攻击部分
 	virtual void attack(Point targetPosition);
-
+	bool attackIsColding;
 
 	//弹药部分
 	Slider* createBulletBar();
-	Slider* setBullet(int health);
+	void setBullet(Slider* theBulletBar,int bullet);
 	Slider* bulletBar;
 	void addBulletBar();
 
+
 	//已发射的子弹
 	Vector<Bullet*> bulletHasBeenShot;
-	void update(float dt)override;
 
+
+
+	//定时器
+	void update(float dt)override;
 protected:
 	//移动部分
 	Animate* createAnimate(int direction, const char* name, int num);//移动动画

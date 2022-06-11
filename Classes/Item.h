@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "cocostudio/CocoStudio.h"
 #include "Const.h"
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -15,8 +16,6 @@ class Item : public cocos2d::Node {
 	CC_SYNTHESIZE(int, healthPointNow, HealthPointNow);//当前Hp
 	//能量
 	CC_SYNTHESIZE(int, power, Power);//携带的能量值
-	//是否死亡
-	CC_SYNTHESIZE(bool, isDead, IsDead);
 
 public:
 
@@ -26,7 +25,7 @@ public:
 
 	//Hp
 	Slider* createHealthBar();
-	Slider* setHealth(int health);
+	void Item::setHealth(Slider* theHealthBar, int health);
 	Slider* healthBar;
 	void addHealthBar();
 
