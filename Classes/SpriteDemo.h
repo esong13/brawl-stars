@@ -25,8 +25,11 @@ public:
 	//void EnterSoundSet(Ref* p);
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;
 	void update(float dt);
-
+	//弹药恢复定时器
 	void attackUpdate(float dt);
+
+	//全场的能量power
+	Vector<Sprite*> powerInTheWorld;
 };
 
 #endif

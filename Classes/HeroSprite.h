@@ -10,8 +10,12 @@ using namespace cocos2d::ui;
 
 
 class HeroSprite :public Item {
-	//攻击力
-	CC_SYNTHESIZE(int, attackNum, AttackNum);
+	//攻击
+	CC_SYNTHESIZE(int, attackNum, AttackNum);//攻击力
+	CC_SYNTHESIZE(bool, attackIsColding, AttackIsColding);//攻击冷却
+
+
+
 	//子弹量
 	CC_SYNTHESIZE(int, bulletMax, BulletMax);//弹药上限
 	CC_SYNTHESIZE(int, bulletNow, BulletNow);//当前弹药量
@@ -36,7 +40,6 @@ public:
 
 	//攻击部分
 	virtual void attack(Point targetPosition);
-	bool attackIsColding;
 
 	//弹药部分
 	Slider* createBulletBar();
@@ -51,7 +54,7 @@ public:
 
 
 	//定时器
-	void update(float dt)override;
+	void update(float dt);
 protected:
 	//移动部分
 	Animate* createAnimate(int direction, const char* name, int num);//移动动画
