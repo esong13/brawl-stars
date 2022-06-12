@@ -4,6 +4,7 @@
 #include "cocos2d.h" 
 #include "Myscene.h" 
 #include "My2scene.h" 
+#include "stop.h" 
 #include "SoundSet.h" 
 #include "AudioEngine.h"
 #include "HeroSprite.h"
@@ -64,6 +65,7 @@ public:
 	void set1ViewPoint(const Point& point);
 	void update(float dt);
 	void EnterSoundSet(Ref* p);
+	void EnterStop(Ref* p);
 private:
 	TMXTiledMap* _tilemap;
 	Sprite* obs1;
