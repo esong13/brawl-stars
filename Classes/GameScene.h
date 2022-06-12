@@ -51,7 +51,7 @@ public:
 	//гЂал
 	SwordMan* hero;
 	bool heroIsDead;
-
+	Point getHeroPositionInMap();
 
 
 

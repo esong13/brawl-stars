@@ -22,7 +22,7 @@ public:
 
 	int direction;
 
-	//¼üÅÌ¼àÌıÆ÷
+	//¼üÅÌ¼àÌıÆ÷ 
 	void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 	void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;

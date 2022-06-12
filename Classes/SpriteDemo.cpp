@@ -287,7 +287,7 @@ void MyWorld::update(float dt)
     hero->heroMoveTo(offsetx, offsety, hero->getMoveSpeed());
 }
 
-void MyWorld::bulletBackUpdate(float dt)
+void MyWorld::bulletBackUpdate(float dt) 
 {
     hero->setBullet(hero->bulletBar, hero->getBulletNow() + 1);
 }

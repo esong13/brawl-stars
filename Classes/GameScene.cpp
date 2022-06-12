@@ -47,7 +47,7 @@ bool Game::init()
 
 	//创建英雄
 	FHero = Sprite::create("Colt.PNG");/*Fhero 方便处理碰撞问题 为Hero不显示的虚拟*/
-	FHero->setScale(2);
+	FHero->setScale(1);
 	FHero->setPosition(ROLENODE_POSITION_X, ROLENODE_POSITION_Y);//自定义出生地点
 	FHero->setVisible(false);
 	_tilemap->addChild(FHero, 1);
@@ -170,7 +170,10 @@ void Game::heroMoveDirection(int offsetx, int offsety)
 	hero->heroMoveTo(offsetx, offsety, hero->getMoveSpeed());
 }
 
-
+Point Game::getHeroPositionInMap()
+{
+	return Point(hero->getRoleSprite()->getPosition() + hero->getPosition());
+}
 void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 {
 	log("1");
@@ -182,22 +185,23 @@ void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 	int offsety = 0;
 	if (keyMap[a])
 	{
-		offsetx = -4;
+		offsetx = -1;
 	}
 	if (keyMap[d])
 	{
-		offsetx = 4;
+		offsetx = 1;
 	}
 	if (keyMap[w])
 	{
-		offsety = 4;
+		offsety = 1;
 	}
 	if (keyMap[s])
 	{
-		offsety = -4;
+		offsety = -1;
 	}
 	//键盘移动
 	if (offsetx == 0 && offsety == 0) {
+		this->set1ViewPoint(getHeroPositionInMap());
 		hero->isRun = false;
 		hero->heroSetAction(hero->direction, 1);
 		return;
@@ -219,8 +223,8 @@ void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 		}
 	}
 	*/
-	/*
-	FHero->setPosition(hero->getPosition());
+	
+	FHero->setPosition(getHeroPositionInMap());
 	auto moveto = MoveTo::create(0.1f, Vec2(FHero->getPosition().x + offsetx, FHero->getPosition().y + offsety));
 	FHero->runAction(moveto);
 	Rect cr1 = FHero->getBoundingBox();
@@ -234,49 +238,40 @@ void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 
 	if (cr1.intersectsRect(cr2))	//是否存在交集
 	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
+		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
 		return;
 	}
 	if (cr1.intersectsRect(cr3))	//是否存在交集
 	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
+		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
 		return;
 	}
 	if (cr1.intersectsRect(cr4))	//是否存在交集
 	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
+		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
 		return;
 	}
 	if (cr1.intersectsRect(cr5))	//是否存在交集
 	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
+		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
 		return;
 	}
 	if (cr1.intersectsRect(cr6))	//是否存在交集
 	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
+		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
 		return;
 	}
 	if (cr1.intersectsRect(cr7))	//是否存在交集
 	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
+		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
 		return;
 	}
 	if (cr1.intersectsRect(cr11))	//是否存在交集
 	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
+		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
 		return;
 	}
-	Hero->runAction(moveto);
-	this->set1ViewPoint(Hero->getPosition());
-*/
+	this->set1ViewPoint(getHeroPositionInMap());
 
 	/*以下为碰撞检测的demo实现*/
 	/*
@@ -353,6 +348,8 @@ Point Game::tileCoordForPosition(Point position)
 	int y = ((_tilemap->getMapSize().height * _tilemap->getTileSize().height) - position.y) / _tilemap->getTileSize().height;
 	return Vec2(x, y);
 }
+
+
 
 void Game::ObstacleCreate()
 {
