@@ -6,14 +6,10 @@ using namespace cocos2d;
 class Myscene : public Layer
 {
 public:
-	Myscene::Myscene();
 	void Myscene::ObstacleCreate();
 	Point Myscene::tileCoordForPosition(Point position);/*×ø±ê×ª»»*/
 	static Scene* createScene();
-	void Myscene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
-	void Myscene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 	virtual bool init();
-	void setViewPoint(const Point& point);
 	void set1ViewPoint(const Point& point);/*ceshi*/
 	void update(float dt);
 	void EnterSoundSet(Ref* p);

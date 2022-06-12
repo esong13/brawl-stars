@@ -1,14 +1,7 @@
 #include"SoundSet.h"/*游戏主界面*/
 #include"Myscene.h"
 #include<string>
-Myscene::Myscene()/*构造函数*/
-{
-	_tilemap = NULL;
 
-	_background = NULL;
-
-	_meta = NULL;
-}
 Scene* Myscene::createScene()
 {
 	auto scene = Scene::create();
@@ -16,24 +9,7 @@ Scene* Myscene::createScene()
 	scene->addChild(layer);
 	return scene;
 }
-void Myscene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)/*键盘按下的监听*/
-{
-	keyMap[keyCode] = true;
-	switch (keyCode) {
-	case EventKeyboard::KeyCode::KEY_SPACE:
-	{
-		//新建jump指针,指向JumpBy::create()返回一个Action的指针对象
-		Action* jump = JumpBy::create(.5, Vec2(0, 0), 20, 1);
-		//执行,让它跳一下
-		Hero->runAction(jump); break;
-	}
-	}
-}
 
-void Myscene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)/*键盘释放的监听*/
-{
-	keyMap[keyCode] = false;
-}
 bool Myscene::init()/*游戏场景初始化*/
 {
 	if (!Layer::init())
