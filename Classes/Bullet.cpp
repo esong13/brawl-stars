@@ -14,11 +14,8 @@ void Bullet::bindSprite(Sprite* sprite)
 }
 
 void Bullet::bulletMoveTo(Point position) {
-	Vec2 visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	Vec2 midSize = (origin + visibleSize) / 2;
-	int dx = position.x - midSize.x;
-	int dy = position.y - midSize.y;
+	int dx = position.x- ROLENODE_POSITION_X - getPosition().x;
+	int dy = position.y- ROLENODE_POSITION_Y - getPosition().y;
 	float r = sqrt(dx * dx + dy * dy);
 	if (dx > 0) {
 		getBulletSprite()->setRotation(-90.0f - (atan(dy / dx) / Pi) * 180.0f);
