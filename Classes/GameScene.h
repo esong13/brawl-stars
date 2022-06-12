@@ -79,8 +79,11 @@ private:
 	Sprite* obs11;
 	Sprite* obs12;
 	Sprite* obs13;
+<<<<<<< Updated upstream
 	Box* box1;
 	Box* box2;
+=======
+>>>>>>> Stashed changes
 	Sprite* Hero;
 	Sprite* FHero;
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;

@@ -30,8 +30,13 @@ bool Game::init()
     auto Mysize = Director::getInstance()->getVisibleSize();
 
     //add the map to the center of the window
+<<<<<<< Updated upstream
 	_tilemap = TMXTiledMap::create("Map.tmx");
 	_tilemap->setPosition(800, 500);
+=======
+	_tilemap = TMXTiledMap::create("map.tmx");
+	_tilemap->setAnchorPoint(Point(0.5,0.5));
+>>>>>>> Stashed changes
 	this->addChild(_tilemap, -1);
 
 
@@ -46,6 +51,7 @@ bool Game::init()
 
 
 
+<<<<<<< Updated upstream
 	//创建英雄
 	FHero = Sprite::create("Colt.PNG");/*Fhero 方便处理碰撞问题 为Hero不显示的虚拟*/
 	FHero->setScale(1);
@@ -77,6 +83,18 @@ bool Game::init()
 
 	//箱子
 
+=======
+
+	FHero = Sprite::create("Nita.png");/*Fhero 方便处理碰撞问题 为Hero不显示的虚拟*/
+	FHero->setScale(2);
+	FHero->setPosition(Mysize.width/2,Mysize.height);
+	FHero->setVisible(false);
+	_tilemap->addChild(FHero, 1);
+	Hero = Sprite::create("Nita.png");
+	Hero->setScale(1);
+	Hero->setPosition(Mysize.width / 2, Mysize.height);
+	_tilemap->addChild(Hero, 1);
+>>>>>>> Stashed changes
 
 
 
@@ -346,6 +364,7 @@ void Game::ObstacleCreate()
 	obs9->setPosition(ROLENODE_POSITION_X+88, ROLENODE_POSITION_Y-12);
 	_tilemap->addChild(obs9);
 	obs10 = Sprite::create("treelinex.png");
+<<<<<<< Updated upstream
 	obs10->setPosition(17 * 32 - 10, 9 * 32 + 20);
 	_tilemap->addChild(obs10);
 	obs11 = Sprite::create("treeliney.png");
@@ -356,6 +375,18 @@ void Game::ObstacleCreate()
 	_tilemap->addChild(obs12);
 	obs13 = Sprite::create("treelinex.png");
 	obs13->setPosition(17 * 32 - 10, 23 * 32 + 20);
+=======
+	obs10->setPosition(17*32-10, 9*32+20);
+	_tilemap->addChild(obs10);
+	obs11 = Sprite::create("treeliney.png");
+	obs11->setPosition(9*32+20, 16*32+15);
+	_tilemap->addChild(obs11);
+	obs12 = Sprite::create("treeliney.png");
+	obs12->setPosition(23 * 32+20, 16 * 32 +15);
+	_tilemap->addChild(obs12);
+	obs13 = Sprite::create("treelinex.png");
+	obs13->setPosition(17 * 32 - 10,  23* 32+20);
+>>>>>>> Stashed changes
 	_tilemap->addChild(obs13);
 
 }
