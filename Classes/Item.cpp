@@ -56,7 +56,6 @@ void Item::Dead()
 		Sprite* powerFalled = Sprite::create("power.png");
 		powerFalled->setPosition(getPosition()+getRoleSprite()->getPosition());
 		getParent()->addChild(powerFalled);
-		//MyWorld::getSpriteLayer()->powerInTheWorld.pushBack(powerFalled);
 	}
 
 	//ÒÆ³ý×Ô¼º

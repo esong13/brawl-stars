@@ -5,7 +5,6 @@
 #include "ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 #include "Const.h"
-//#include "SpriteDemo.h"
 USING_NS_CC;
 using namespace cocos2d::ui;
 

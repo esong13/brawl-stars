@@ -12,7 +12,6 @@ class Bullet :public Node{
 	CC_SYNTHESIZE(int, bulletSpeed, BulletSpeed);//速度
 	CC_SYNTHESIZE(int, bulletDistance, BulletDistance);//射程
 	CC_SYNTHESIZE(Point, bulletTerminal, BulletTerminal);//目标地点
-	CC_SYNTHESIZE(Sprite*, bulletFrom, BulletFrom);//子弹发射者
 	
 
 public:

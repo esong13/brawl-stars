@@ -37,10 +37,9 @@ void SwordMan::attack(Point targetPosition)
 
 		//赋予子弹相关值
 		bulletNode->setPosition(getRoleSprite()->getPosition());
-		bulletNode->setBulletDistance(40);//设置子弹距离
-		bulletNode->setBulletAttackNum(this->getAttackNum());//设置子弹攻击力
-		bulletNode->setBulletSpeed(10* SWORDMAN_SPEED);//设置子弹速度
-		bulletNode->setBulletFrom(getRoleSprite());//设置子弹发射者
+		bulletNode->setBulletDistance(40);
+		bulletNode->setBulletAttackNum(this->getAttackNum());
+		bulletNode->setBulletSpeed(10* SWORDMAN_SPEED);
 
 		//子弹移动
 		bulletNode->bulletMoveTo(targetPosition);

@@ -7,8 +7,8 @@
 
 Scene* MyWorld::createScene(){
     auto scene = Scene::create();
-    auto spriteLayer = MyWorld::create();
-    scene->addChild(spriteLayer);
+    auto layer = MyWorld::create();
+    scene->addChild(layer);
     return scene;
 }
 
@@ -64,6 +64,7 @@ bool MyWorld::init()
     hero->addHealthBar();
     hero->heroSetAction(hero->direction, 1);
     this->heroIsDead = false;
+    //test
 
     //hero->attack(hero->getPosition() + Point(20, 20)+ hero->getRoleSprite()->getPosition());//²âÊÔ
 
@@ -103,15 +104,9 @@ bool MyWorld::init()
     
 
 
-    //controllerListener = PlayerControllerListener::create();
-    //controllerListener->bindSprite(hero->getRoleSprite());
-    //controllerListener->init();
-
     this->scheduleUpdate();
-
-
     auto keyListener = EventListenerKeyboard::create();
-    
+
     keyListener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event) {
         keyMap[keyCode] = true;
         switch (keyCode) {
@@ -130,7 +125,6 @@ bool MyWorld::init()
         keyMap[keyCode] = false;
     };
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
-
 
 	return true;
 }
