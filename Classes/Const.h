@@ -16,6 +16,7 @@ enum hero_direction
 #define SWORDMAN_ATTACKNUM 600
 #define SWORDMAN_HP 3000
 #define SWORDMAN_SPEED 1
+#define SWORDMAN_ATTACKCDTIME 0.7
 
 
 //½ÇÉ«³õÊ¼Î»ÖÃ

@@ -10,7 +10,7 @@ bool HeroSprite::init(){
 	setBulletMax(3);//弹药上限
 	setBulletNow(3);//当前弹药
 	this->scheduleUpdate();
-	attackIsColding = false;//未在冷却中
+	setAttackIsColding(false);//未在冷却中
 	return true;
 }
 
@@ -97,6 +97,8 @@ void HeroSprite::attack(Point targetPosition)
 	bulletNow--;//弹药减少
 	setBullet(bulletBar,bulletNow);//设置弹药条
 }
+
+
 
 
 
