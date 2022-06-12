@@ -18,7 +18,7 @@ public:
 
 	static cocos2d::Scene* createScene();
 	virtual bool init();
-	CREATE_FUNC(MyWorld);
+	CREATE_FUNC(MyWorld); 
 
 	int direction;
 

@@ -114,7 +114,7 @@ bool MyWorld::init()
 
 
     this->scheduleUpdate();
-
+     
     //¼üÅÌ¼àÌýÆ÷
     auto keyListener = EventListenerKeyboard::create();
     keyListener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event) {
@@ -147,7 +147,6 @@ bool MyWorld::init()
 	return true;
 }
 
-//Êó±êµã»÷¹¥»÷
 void MyWorld::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
     keyMap[keyCode] = true;

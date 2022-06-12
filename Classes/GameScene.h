@@ -8,6 +8,8 @@
 #include "AudioEngine.h"
 #include "HeroSprite.h"
 #include "SwordMan.h"
+#include "Const.h"
+#include "Box.h"
 using namespace std;
 using namespace cocos2d;
 
@@ -27,6 +29,32 @@ public:
 
     // implement the "static create()" method manually
     CREATE_FUNC(Game);
+
+	//加入英雄的函数
+	
+	//鼠标监听器
+	EventListenerTouchOneByOne* listener;
+	//触屏事件
+	virtual bool onTouchBegan(Touch* touch, Event* event);
+	//弹药恢复定时器
+	void bulletBackUpdate(float dt);
+	void attackCDUpdate(float dt);
+	//英雄方向
+	int direction;
+	void heroMoveDirection(int offsetx, int offsety);
+	//全场的能量power
+	Vector<Sprite*> powerInTheWorld;
+
+	//box箱子
+	Box* box1;
+	bool isBox1Dead;
+	//英雄
+	SwordMan* hero;
+	bool heroIsDead;
+
+
+
+
 
 
 	void ObstacleCreate();

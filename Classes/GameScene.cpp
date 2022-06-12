@@ -45,16 +45,37 @@ bool Game::init()
 
 
 
-
-	FHero = Sprite::create("Nita.png");/*Fhero 方便处理碰撞问题 为Hero不显示的虚拟*/
-	FHero->setScale(0.1);
-	FHero->setPosition(Mysize.width/2,Mysize.height/2);
+	//创建英雄
+	FHero = Sprite::create("Colt.PNG");/*Fhero 方便处理碰撞问题 为Hero不显示的虚拟*/
+	FHero->setScale(2);
+	FHero->setPosition(ROLENODE_POSITION_X, ROLENODE_POSITION_Y);//自定义出生地点
 	FHero->setVisible(false);
 	_tilemap->addChild(FHero, 1);
-	Hero = Sprite::create("Nita.png");
-	Hero->setScale(0.05);
-	Hero->setPosition(Mysize.width / 2, Mysize.height / 2);
-	_tilemap->addChild(Hero, 1);
+
+
+	hero = SwordMan::create();;
+	hero->setScale(1);
+	hero->setPosition(ROLENODE_POSITION_X, ROLENODE_POSITION_Y);//自定义出生地点
+	hero->bindSprite(Sprite::create("Colt.PNG"));
+	hero->addBulletBar();
+	hero->addHealthBar();
+	hero->heroSetAction(hero->direction, 1);
+	this->heroIsDead = false;
+
+	_tilemap->addChild(hero, 1);
+	//子弹恢复
+	schedule(CC_SCHEDULE_SELECTOR(Game::bulletBackUpdate), 2, 10000, 2.0f);
+
+	//鼠标监听器
+	listener = EventListenerTouchOneByOne::create();
+	//绑定监听事件
+	listener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
+
+	listener->setSwallowTouches(true);
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
+
+
 
 
 
@@ -108,6 +129,48 @@ void Game::set1ViewPoint(const Point& point)/*视角拖动*/
 	_tilemap->setPosition(viewPoint);
 }
 
+//鼠标点击攻击
+bool Game::onTouchBegan(Touch* touch, Event* event)
+{
+	//得到触屏点坐标
+	Point point = touch->getLocation();
+	if (!hero->getAttackIsColding()) {
+		scheduleOnce(CC_SCHEDULE_SELECTOR(Game::attackCDUpdate), hero->getAttackCDTime());
+	}
+	hero->attack(point);
+	return true;
+}
+
+void Game::heroMoveDirection(int offsetx, int offsety)
+{
+	if (offsetx < 0 && offsety == 0) { direction = LEFT; }
+	else if (offsetx > 0 && offsety == 0) { direction = RIGHT; }
+	else if (offsetx == 0 && offsety < 0) { direction = DOWN; }
+	else if (offsetx == 0 && offsety > 0) { direction = UP; }
+	else if (offsetx < 0 && offsety > 0) { direction = LEFT_UP; }
+	else if (offsetx < 0 && offsety < 0) { direction = LEFT_DOWN; }
+	else if (offsetx > 0 && offsety > 0) { direction = RIGHT_UP; }
+	else if (offsetx > 0 && offsety < 0) { direction = RIGHT_DOWN; }
+
+
+	if (hero->isRun == false)
+	{
+		hero->isRun = true;
+		hero->direction = direction;
+		hero->heroSetAction(hero->direction, 4);
+	}
+	else if (hero->isRun == true)
+	{
+		if (hero->direction != direction)
+		{
+			hero->direction = direction;
+			hero->heroSetAction(hero->direction, 4);
+		}
+	}
+	hero->heroMoveTo(offsetx, offsety, hero->getMoveSpeed());
+}
+
+
 void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 {
 	log("1");
@@ -133,9 +196,90 @@ void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 	{
 		offsety = -4;
 	}
-	if (offsetx == 0 && offsety == 0)
+	//键盘移动
+	if (offsetx == 0 && offsety == 0) {
+		hero->isRun = false;
+		hero->heroSetAction(hero->direction, 1);
 		return;
+	}
+	heroMoveDirection(offsetx, offsety);
+
+	//判断是否可能拾取buff
+	/*
+	for (int i = 0; i < powerInTheWorld.size(); i++) {
+		Sprite* power = powerInTheWorld.at(i);
+		if (power->getPosition() == hero->getPosition()) {
+			//若拾取
+			hero->setPower(hero->getPower() + 1);
+			hero->setHealthPointMax(hero->getHealthPointMax() + 500);
+			hero->setHealth(hero->healthBar, hero->getHealthPointNow() + 500);
+			powerInTheWorld.erase(i);
+			removeChild(power, true);
+			continue;
+		}
+	}
+	*/
+	/*
+	FHero->setPosition(hero->getPosition());
+	auto moveto = MoveTo::create(0.1f, Vec2(FHero->getPosition().x + offsetx, FHero->getPosition().y + offsety));
+	FHero->runAction(moveto);
+	Rect cr1 = FHero->getBoundingBox();
+	Rect cr2 = obs1->getBoundingBox();
+	Rect cr3 = obs2->getBoundingBox();
+	Rect cr4 = obs3->getBoundingBox();
+	Rect cr5 = obs4->getBoundingBox();
+	Rect cr6 = obs5->getBoundingBox();
+	Rect cr7 = obs6->getBoundingBox();
+	Rect cr11 = obs10->getBoundingBox();
+
+	if (cr1.intersectsRect(cr2))	//是否存在交集
+	{
+		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
+		Hero->runAction(moveto);
+		return;
+	}
+	if (cr1.intersectsRect(cr3))	//是否存在交集
+	{
+		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
+		Hero->runAction(moveto);
+		return;
+	}
+	if (cr1.intersectsRect(cr4))	//是否存在交集
+	{
+		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
+		Hero->runAction(moveto);
+		return;
+	}
+	if (cr1.intersectsRect(cr5))	//是否存在交集
+	{
+		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
+		Hero->runAction(moveto);
+		return;
+	}
+	if (cr1.intersectsRect(cr6))	//是否存在交集
+	{
+		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
+		Hero->runAction(moveto);
+		return;
+	}
+	if (cr1.intersectsRect(cr7))	//是否存在交集
+	{
+		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
+		Hero->runAction(moveto);
+		return;
+	}
+	if (cr1.intersectsRect(cr11))	//是否存在交集
+	{
+		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
+		Hero->runAction(moveto);
+		return;
+	}
+	Hero->runAction(moveto);
+	this->set1ViewPoint(Hero->getPosition());
+*/
+
 	/*以下为碰撞检测的demo实现*/
+	/*
 	FHero->setPosition(Hero->getPosition());
 	auto moveto = MoveTo::create(0.1f, Vec2(FHero->getPosition().x + offsetx, FHero->getPosition().y + offsety));
 	FHero->runAction(moveto);
@@ -192,6 +336,11 @@ void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 	}
 	Hero->runAction(moveto);
 	this->set1ViewPoint(Hero->getPosition());
+	*/
+
+
+
+
 }
 
 Point Game::tileCoordForPosition(Point position)
@@ -235,10 +384,19 @@ void Game::ObstacleCreate()
 	obs9 = Sprite::create("tree.png");
 	obs9->setPosition(Mysize.width / 2 - 200, Mysize.height / 2);
 	_tilemap->addChild(obs9);
-	obs10 = Sprite::create("weilan.png");
+	obs10 = Sprite::create("tree.png");
 	obs10->setPosition(0, 0);
 	_tilemap->addChild(obs10);
 
 
 
+}
+void Game::bulletBackUpdate(float dt)
+{
+	hero->setBullet(hero->bulletBar, hero->getBulletNow() + 1);
+}
+
+void Game::attackCDUpdate(float dt)
+{
+	hero->setAttackIsColding(false);
 }
