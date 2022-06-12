@@ -210,6 +210,9 @@ void Game::thingsRectOn(Rect cr1,int action)
 	Rect cr15 = box1->getBoundingBox();
 	Rect cr16 = box2->getBoundingBox();
 	Rect cr17 = box3->getBoundingBox();
+	Rect cr18 = Hero1->getBoundingBox();
+	Rect cr19 = Hero2->getBoundingBox();
+	Rect cr20 = Hero3->getBoundingBox();
 
 	if (cr1.intersectsRect(cr2)
 		|| cr1.intersectsRect(cr3)
@@ -226,7 +229,10 @@ void Game::thingsRectOn(Rect cr1,int action)
 		|| cr1.intersectsRect(cr14)
 		|| cr1.intersectsRect(cr15)
 		|| cr1.intersectsRect(cr16)
-		|| cr1.intersectsRect(cr17))	//是否存在交集
+		|| cr1.intersectsRect(cr17)
+		|| cr1.intersectsRect(cr18)
+		|| cr1.intersectsRect(cr19)
+		|| cr1.intersectsRect(cr20))	//是否存在交集
 	{
 		switch (action) {
 			case 1:
@@ -400,6 +406,21 @@ void Game::ObstacleCreate()
 	box3->addHealthBar();
 	box3->healthBar->setPosition(box3->healthBar->getPosition() - Point(3, 14));
 	_tilemap->addChild(box3, 11);
+
+	Hero1 = Sprite::create("Nita.png");
+	Hero1->setScale(1);
+	Hero1->setPosition(ROLENODE_POSITION_X-123, ROLENODE_POSITION_Y+123);//自定义出生地点
+	_tilemap->addChild(Hero1);
+
+	Hero2 = Sprite::create("Rosa.png");
+	Hero2->setScale(1);
+	Hero2->setPosition(ROLENODE_POSITION_X + 123, ROLENODE_POSITION_Y + 123);//自定义出生地点
+	_tilemap->addChild(Hero2);
+
+	Hero3 = Sprite::create("Shelly.png");
+	Hero3->setScale(1);
+	Hero3->setPosition(ROLENODE_POSITION_X + 123, ROLENODE_POSITION_Y - 123);//自定义出生地点
+	_tilemap->addChild(Hero3);
 
 	
 

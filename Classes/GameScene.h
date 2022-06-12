@@ -84,6 +84,9 @@ private:
 	Box* box3;
 	Sprite* Hero;
 	Sprite* FHero;
+	Sprite* Hero1;
+	Sprite* Hero2;
+	Sprite* Hero3;
 	int GameScenemp3;
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;
 };
