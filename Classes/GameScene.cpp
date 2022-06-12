@@ -74,7 +74,7 @@ bool Game::init()
 	listener->setSwallowTouches(true);
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
-
+	//箱子
 
 
 
@@ -174,6 +174,44 @@ Point Game::getHeroPositionInMap()
 {
 	return Point(hero->getRoleSprite()->getPosition() + hero->getPosition());
 }
+
+void Game::thingsRectOnMove() {
+	hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
+}
+
+
+void Game::thingsRectOn(Rect cr1,int action)
+{
+	Rect cr2 = obs1->getBoundingBox();
+	Rect cr3 = obs2->getBoundingBox();
+	Rect cr4 = obs3->getBoundingBox();
+	Rect cr5 = obs4->getBoundingBox();
+	Rect cr6 = obs5->getBoundingBox();
+	Rect cr7 = obs6->getBoundingBox();
+	Rect cr11 = obs10->getBoundingBox();
+
+	if (cr1.intersectsRect(cr2)
+		|| cr1.intersectsRect(cr3)
+		|| cr1.intersectsRect(cr4)
+		|| cr1.intersectsRect(cr5)
+		|| cr1.intersectsRect(cr6)
+		|| cr1.intersectsRect(cr7)
+		|| cr1.intersectsRect(cr11))	//是否存在交集
+	{
+		switch (action) {
+			case 1:
+				thingsRectOnMove();
+				break;
+			case 2:
+
+				break;
+		}
+		return;
+	}
+}
+
+
+
 void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 {
 	log("1");
@@ -181,8 +219,8 @@ void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 	auto s = EventKeyboard::KeyCode::KEY_S;
 	auto a = EventKeyboard::KeyCode::KEY_A;
 	auto d = EventKeyboard::KeyCode::KEY_D;
-	int offsetx = 0;
-	int offsety = 0;
+	offsetx = 0;
+	offsety = 0;
 	if (keyMap[a])
 	{
 		offsetx = -1;
@@ -209,7 +247,7 @@ void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 	heroMoveDirection(offsetx, offsety);
 
 	//判断是否可能拾取buff
-	/*
+	
 	for (int i = 0; i < powerInTheWorld.size(); i++) {
 		Sprite* power = powerInTheWorld.at(i);
 		if (power->getPosition() == hero->getPosition()) {
@@ -222,119 +260,30 @@ void Game::update(float dt)/*实时监听移动 检测碰撞等操作*/
 			continue;
 		}
 	}
-	*/
+	
 	
 	FHero->setPosition(getHeroPositionInMap());
 	auto moveto = MoveTo::create(0.1f, Vec2(FHero->getPosition().x + offsetx, FHero->getPosition().y + offsety));
 	FHero->runAction(moveto);
 	Rect cr1 = FHero->getBoundingBox();
-	Rect cr2 = obs1->getBoundingBox();
-	Rect cr3 = obs2->getBoundingBox();
-	Rect cr4 = obs3->getBoundingBox();
-	Rect cr5 = obs4->getBoundingBox();
-	Rect cr6 = obs5->getBoundingBox();
-	Rect cr7 = obs6->getBoundingBox();
-	Rect cr11 = obs10->getBoundingBox();
-
-	if (cr1.intersectsRect(cr2))	//是否存在交集
-	{
-		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
-		return;
-	}
-	if (cr1.intersectsRect(cr3))	//是否存在交集
-	{
-		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
-		return;
-	}
-	if (cr1.intersectsRect(cr4))	//是否存在交集
-	{
-		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
-		return;
-	}
-	if (cr1.intersectsRect(cr5))	//是否存在交集
-	{
-		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
-		return;
-	}
-	if (cr1.intersectsRect(cr6))	//是否存在交集
-	{
-		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
-		return;
-	}
-	if (cr1.intersectsRect(cr7))	//是否存在交集
-	{
-		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
-		return;
-	}
-	if (cr1.intersectsRect(cr11))	//是否存在交集
-	{
-		hero->getRoleSprite()->setPosition(Vec2(hero->getRoleSprite()->getPosition().x - offsetx, hero->getRoleSprite()->getPosition().y - offsety));
-		return;
-	}
-	this->set1ViewPoint(getHeroPositionInMap());
-
-	/*以下为碰撞检测的demo实现*/
+	thingsRectOn(cr1, 1);
 	/*
-	FHero->setPosition(Hero->getPosition());
-	auto moveto = MoveTo::create(0.1f, Vec2(FHero->getPosition().x + offsetx, FHero->getPosition().y + offsety));
-	FHero->runAction(moveto);
-	Rect cr1 = FHero->getBoundingBox();
-	Rect cr2 = obs1->getBoundingBox();
-	Rect cr3 = obs2->getBoundingBox();
-	Rect cr4 = obs3->getBoundingBox();
-	Rect cr5 = obs4->getBoundingBox();
-	Rect cr6 = obs5->getBoundingBox();
-	Rect cr7 = obs6->getBoundingBox();
-	Rect cr11 = obs10->getBoundingBox();
-		
-	if (cr1.intersectsRect(cr2))	//是否存在交集
-	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
-		return;
-	}
-	if (cr1.intersectsRect(cr3))	//是否存在交集
-	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
-		return;
-	}
-	if (cr1.intersectsRect(cr4))	//是否存在交集
-	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
-		return;
-	}
-	if (cr1.intersectsRect(cr5))	//是否存在交集
-	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
-		return;
-	}
-	if (cr1.intersectsRect(cr6))	//是否存在交集
-	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
-		return;
-	}
-	if (cr1.intersectsRect(cr7))	//是否存在交集
-	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
-		return;
-	}
-	if (cr1.intersectsRect(cr11))	//是否存在交集
-	{
-		moveto = MoveTo::create(0.1f, Vec2(Hero->getPosition().x - offsetx, Hero->getPosition().y - offsety));
-		Hero->runAction(moveto);
-		return;
-	}
-	Hero->runAction(moveto);
-	this->set1ViewPoint(Hero->getPosition());
-	*/
+	for (int i = 0; i < hero->bulletHasBeenShot.size(); i++) {
+		Bullet* bullet = hero->bulletHasBeenShot.at(i);
+		Sprite* Fbullet= Sprite::create("sword_light.png");
+		Fbullet->setScale(1);
+		Fbullet->setPosition(bullet->getBulletSprite()->getPosition() + getHeroPositionInMap());
+		Fbullet->setVisible(false);
+		_tilemap->addChild(Fbullet, 1);
 
-
-
+		if (Fbullet->getPosition() == bullet->getBulletTerminal()) {
+			hero->bulletHasBeenShot.erase(i);
+			removeChild(bullet, true);
+			continue;
+		}
+	}
+*/
+	this->set1ViewPoint(getHeroPositionInMap());
 
 }
 
@@ -348,6 +297,8 @@ Point Game::tileCoordForPosition(Point position)
 	int y = ((_tilemap->getMapSize().height * _tilemap->getTileSize().height) - position.y) / _tilemap->getTileSize().height;
 	return Vec2(x, y);
 }
+
+
 
 
 
@@ -384,8 +335,6 @@ void Game::ObstacleCreate()
 	obs10 = Sprite::create("tree.png");
 	obs10->setPosition(0, 0);
 	_tilemap->addChild(obs10);
-
-
 
 }
 void Game::bulletBackUpdate(float dt)

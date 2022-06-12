@@ -52,10 +52,12 @@ public:
 	SwordMan* hero;
 	bool heroIsDead;
 	Point getHeroPositionInMap();
-
-
-
-
+	//碰撞整合
+	void thingsRectOn(Rect cr1, int action);
+	int offsetx;
+	int offsety;
+	//碰撞后的行为
+	void thingsRectOnMove();//移动碰撞
 
 	void ObstacleCreate();
 	Point tileCoordForPosition(Point position);/*坐标转换*/

@@ -27,8 +27,6 @@ public:
 	void Item::setHealth(Slider* theHealthBar, int health);
 	Slider* healthBar;
 	void addHealthBar();
-
-
 	//ÊÜÉË
 	bool Wounded(int damage);  
 	//ËÀÍö
