@@ -1,7 +1,11 @@
 #include "GameScene.h"
 
-Scene* Game::createScene()
+Scene* Game::createScene(vector<int> chosenPlayer)
 {
+    for (int i = 0; i < chosenPlayer.size(); i++)
+    {
+        _chosenPlayer.push_back(chosenPlayer[i]);
+    }
     return Game::create();
 }
 

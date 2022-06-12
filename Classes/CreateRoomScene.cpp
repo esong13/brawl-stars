@@ -262,6 +262,6 @@ void CreateRoom::menuPlayCallback(Ref* pSender)
     if (_chosenPlayer.size() == 4)
     {
         AudioEngine::stopAll();
-        Director::getInstance()->replaceScene(Game::createScene());
+        Director::getInstance()->replaceScene(Game::createScene(_chosenPlayer));
     }
 }
