@@ -43,6 +43,13 @@ bool Game::init()
     SoundSet->setScale(0.2);
     SoundSet->setPosition(Vec2(-150,-100));
     this->addChild(SoundSet,10);
+	/*暂停界面*/
+	auto menuitems = MenuItemImage::create("stop.png", "stop.png", CC_CALLBACK_1(Game::EnterStop, this));/*菜单的设置*/
+	menuitems->setPosition(Vec2(Mysize.width / 2, Mysize.height / 2));
+	auto stop= Menu::create(menuitems, NULL);
+	stop->setScale(0.2);
+	stop->setPosition(Vec2(150, -100));
+	this->addChild(stop, 10);
 
 
 
@@ -115,6 +122,10 @@ bool Game::init()
 void Game::EnterSoundSet(Ref* p)/*切换场景*/
 {
     Director::getInstance()->pushScene( SoundSet::createScene());
+}
+void Game::EnterStop(Ref* p)/*暂停*/
+{
+	Director::getInstance()->pushScene(Stop::createScene());
 }
 void Game::set1ViewPoint(const Point& point)/*视角拖动*/
 {
