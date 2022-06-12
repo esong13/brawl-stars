@@ -30,7 +30,8 @@ bool Game::init()
     auto Mysize = Director::getInstance()->getVisibleSize();
 
     //add the map to the center of the window
-	_tilemap = TMXTiledMap::create("map.tmx");
+	_tilemap = TMXTiledMap::create("Map.tmx");
+	_tilemap->setPosition(800, 500);
 	this->addChild(_tilemap, -1);
 
 
@@ -113,7 +114,7 @@ bool Game::init()
 
 void Game::EnterSoundSet(Ref* p)/*切换场景*/
 {
-    Director::getInstance()->pushScene(TransitionSlideInL::create(1, SoundSet::createScene()));
+    Director::getInstance()->pushScene( SoundSet::createScene());
 }
 void Game::set1ViewPoint(const Point& point)/*视角拖动*/
 {
@@ -188,7 +189,13 @@ void Game::thingsRectOn(Rect cr1,int action)
 	Rect cr5 = obs4->getBoundingBox();
 	Rect cr6 = obs5->getBoundingBox();
 	Rect cr7 = obs6->getBoundingBox();
+	Rect cr8 = obs7->getBoundingBox();
+	Rect cr9 = obs8->getBoundingBox();
+	Rect cr10= obs9->getBoundingBox();
 	Rect cr11 = obs10->getBoundingBox();
+	Rect cr12 = obs11->getBoundingBox();
+	Rect cr13 = obs12->getBoundingBox();
+	Rect cr14 = obs13->getBoundingBox();
 
 	if (cr1.intersectsRect(cr2)
 		|| cr1.intersectsRect(cr3)
@@ -196,7 +203,13 @@ void Game::thingsRectOn(Rect cr1,int action)
 		|| cr1.intersectsRect(cr5)
 		|| cr1.intersectsRect(cr6)
 		|| cr1.intersectsRect(cr7)
-		|| cr1.intersectsRect(cr11))	//是否存在交集
+		|| cr1.intersectsRect(cr8)
+		|| cr1.intersectsRect(cr9)
+		|| cr1.intersectsRect(cr10)
+		|| cr1.intersectsRect(cr11)
+		|| cr1.intersectsRect(cr12)
+		|| cr1.intersectsRect(cr13)
+		|| cr1.intersectsRect(cr14))	//是否存在交集
 	{
 		switch (action) {
 			case 1:
@@ -305,36 +318,45 @@ Point Game::tileCoordForPosition(Point position)
 void Game::ObstacleCreate()
 {
 	Size Mysize = Director::getInstance()->getVisibleSize();
-	obs1 = Sprite::create("tree.png");
-	obs1->setPosition(Mysize.width / 2 - 200, Mysize.height / 2);
+	obs1 = Sprite::create("bigtree.png");
+	obs1->setPosition(ROLENODE_POSITION_X-100, ROLENODE_POSITION_Y+100);
 	_tilemap->addChild(obs1);
-	obs2 = Sprite::create("tree.png");
-	obs2->setPosition(Mysize.width / 2 - 200, Mysize.height / 2 + 100);
+	obs2 = Sprite::create("bigtree.png");
+	obs2->setPosition(ROLENODE_POSITION_X-200, ROLENODE_POSITION_Y);
 	_tilemap->addChild(obs2);
-	obs3 = Sprite::create("tree.png");
-	obs3->setPosition(Mysize.width / 2 - 100, Mysize.height / 2 + 99);
+	obs3 = Sprite::create("bigtree.png");
+	obs3->setPosition(ROLENODE_POSITION_X+50, ROLENODE_POSITION_Y+120);
 	_tilemap->addChild(obs3);
-	obs4 = Sprite::create("tree.png");
-	obs4->setPosition(Mysize.width / 2 - 200 - 54, Mysize.height / 2 + 46);
+	obs4 = Sprite::create("bigtree.png");
+	obs4->setPosition(ROLENODE_POSITION_X+100, ROLENODE_POSITION_Y+78);
 	_tilemap->addChild(obs4);
-	obs5 = Sprite::create("tree.png");
-	obs5->setPosition(Mysize.width / 2 - 200 - 99, Mysize.height / 2 + 78);
+	obs5 = Sprite::create("bigstone.png");
+	obs5->setPosition(ROLENODE_POSITION_X+123, ROLENODE_POSITION_Y+66);
 	_tilemap->addChild(obs5);
-	obs6 = Sprite::create("tree.png");
-	obs6->setPosition(Mysize.width / 2 - 200, Mysize.height / 2);
+	obs6 = Sprite::create("bigstone.png");
+	obs6->setPosition(ROLENODE_POSITION_X-77, ROLENODE_POSITION_Y+99);
 	_tilemap->addChild(obs6);
-	obs7 = Sprite::create("tree.png");
-	obs7->setPosition(Mysize.width / 2 - 200, Mysize.height / 2);
+	obs7 = Sprite::create("bigstone.png");
+	obs7->setPosition(ROLENODE_POSITION_X-24, ROLENODE_POSITION_Y-67);
 	_tilemap->addChild(obs7);
-	obs8 = Sprite::create("tree.png");
-	obs8->setPosition(Mysize.width / 2 - 200, Mysize.height / 2);
+	obs8 = Sprite::create("bigstone.png");
+	obs8->setPosition(ROLENODE_POSITION_X-55, ROLENODE_POSITION_Y);
 	_tilemap->addChild(obs8);
-	obs9 = Sprite::create("tree.png");
-	obs9->setPosition(Mysize.width / 2 - 200, Mysize.height / 2);
+	obs9 = Sprite::create("bigstone.png");
+	obs9->setPosition(ROLENODE_POSITION_X+88, ROLENODE_POSITION_Y-12);
 	_tilemap->addChild(obs9);
-	obs10 = Sprite::create("tree.png");
-	obs10->setPosition(0, 0);
+	obs10 = Sprite::create("treelinex.png");
+	obs10->setPosition(17 * 32 - 10, 9 * 32 + 20);
 	_tilemap->addChild(obs10);
+	obs11 = Sprite::create("treeliney.png");
+	obs11->setPosition(9 * 32 + 20, 16 * 32 + 15);
+	_tilemap->addChild(obs11);
+	obs12 = Sprite::create("treeliney.png");
+	obs12->setPosition(23 * 32 + 20, 16 * 32 + 15);
+	_tilemap->addChild(obs12);
+	obs13 = Sprite::create("treelinex.png");
+	obs13->setPosition(17 * 32 - 10, 23 * 32 + 20);
+	_tilemap->addChild(obs13);
 
 }
 void Game::bulletBackUpdate(float dt)

@@ -20,8 +20,8 @@ enum hero_direction
 
 
 //½ÇÉ«³õÊ¼Î»ÖÃ
-#define ROLENODE_POSITION_X 100
-#define ROLENODE_POSITION_Y 100
+#define ROLENODE_POSITION_X 525
+#define ROLENODE_POSITION_Y 522
 
 
 

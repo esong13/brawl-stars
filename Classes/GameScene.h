@@ -46,7 +46,6 @@ public:
 	Vector<Sprite*> powerInTheWorld;
 
 	//boxÏä×Ó
-	Box* box1;
 	bool isBox1Dead;
 	//Ó¢ÐÛ
 	SwordMan* hero;
@@ -77,6 +76,11 @@ private:
 	Sprite* obs8;
 	Sprite* obs9;
 	Sprite* obs10;
+	Sprite* obs11;
+	Sprite* obs12;
+	Sprite* obs13;
+	Box* box1;
+	Box* box2;
 	Sprite* Hero;
 	Sprite* FHero;
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;
