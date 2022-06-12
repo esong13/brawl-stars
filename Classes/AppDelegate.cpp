@@ -26,7 +26,6 @@
 //#include "HelloWorldScene.h"
 #include "StartScene.h"
 #include "SpriteDemo.h"
-#include "My2scene.h"
 
 // #define USE_AUDIO_ENGINE 1
 
