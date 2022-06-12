@@ -45,7 +45,7 @@ bool MyWorld::init()
     auto* pBackground = Sprite::create("firstmap.png");
     pBackground->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     pBackground->setScale(0.8f);
-    layer1->addChild(pBackground);
+    layer1->addChild(pBackground,-10);
     this->addChild(layer1,-1);
     
     //auto* layer2 = Layer::create();
@@ -66,7 +66,16 @@ bool MyWorld::init()
     this->heroIsDead = false;
     //test
 
-    //hero->attack(hero->getPosition() + Point(20, 20)+ hero->getRoleSprite()->getPosition());//测试
+    //box
+    /**/
+    box1 = Box::create();
+    box1->bindSprite(Sprite::create("box.png"));
+    box1->setPosition(200, 200);
+    box1->addHealthBar();
+    box1->healthBar->setPosition(box1->healthBar->getPosition() - Point(3, 14));
+    isBox1Dead = false;
+    addChild(box1,-1);
+
 
     schedule(CC_SCHEDULE_SELECTOR(MyWorld::bulletBackUpdate), 2, 2000, 2.0f);
 
@@ -162,6 +171,8 @@ void MyWorld::update(float dt)
     auto d = EventKeyboard::KeyCode::KEY_D;
     auto j = EventKeyboard::KeyCode::KEY_J;
     auto q = EventKeyboard::KeyCode::KEY_Q;
+    auto b = EventKeyboard::KeyCode::KEY_B;
+
     int offsetx = 0;
     int offsety = 0;
     if (keyMap[a])
@@ -190,14 +201,52 @@ void MyWorld::update(float dt)
     }
     if (keyMap[q])//主动死亡
     {
+        //通过能量多少判断掉落多少能量
+        for (int i = 1; i <= (hero->getPower() - 1) / 2 + 1; ++i) {
+            Sprite* powerFalled = Sprite::create("power.png");
+            powerFalled->setPosition(hero->getPosition() + hero->getRoleSprite()->getPosition());
+            this->addChild(powerFalled);
+            powerInTheWorld.pushBack(powerFalled);
+        }
+        unschedule(CC_SCHEDULE_SELECTOR(MyWorld::bulletBackUpdate));
         hero->Dead();
         heroIsDead = true;
+        this->unscheduleUpdate();
+        return;
+    }
+    if (keyMap[b])//箱子死亡
+    {
+        if (isBox1Dead) {
+            return;
+        }
+        for (int i = 1; i <= (box1->getPower() - 1) / 2 + 1; ++i) {
+            Sprite* powerFalled = Sprite::create("power.png");
+            powerFalled->setPosition(box1->getPosition() + box1->getRoleSprite()->getPosition());
+            this->addChild(powerFalled);
+            powerInTheWorld.pushBack(powerFalled);
+        }
+        box1->Dead();
+        isBox1Dead = true;
         return;
     }
     if (offsetx == 0 && offsety == 0) {
         hero->isRun = false;
         hero->heroSetAction(hero->direction, 1);
         return;
+    }
+
+    //判断是否可能拾取buff
+    for (int i = 0; i < powerInTheWorld.size(); i++) {
+        Sprite* power = powerInTheWorld.at(i);
+        if (power->getPosition() == hero->getPosition()) {
+            //若拾取
+            hero->setPower(hero->getPower() + 1);
+            hero->setHealthPointMax(hero->getHealthPointMax() + 500);
+            hero->setHealth(hero->healthBar, hero->getHealthPointNow() + 500);
+            powerInTheWorld.erase(i);
+            removeChild(power, true);
+            continue;
+        }
     }
     
     if (offsetx < 0 && offsety == 0) { direction = LEFT; }

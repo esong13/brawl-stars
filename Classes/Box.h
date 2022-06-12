@@ -8,6 +8,7 @@ USING_NS_CC;
 
 
 class Box :public Item {
+public:
 	//创建和初始化
 	CREATE_FUNC(Box);
 	virtual bool init();

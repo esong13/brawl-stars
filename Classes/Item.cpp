@@ -51,12 +51,7 @@ bool Item::Wounded(int damage)
 
 void Item::Dead()
 {
-	//通过能量多少判断掉落多少能量
-	for (int i = 1; i <= (getPower() - 1) / 2 + 1;++i) {
-		Sprite* powerFalled = Sprite::create("power.png");
-		powerFalled->setPosition(getPosition()+getRoleSprite()->getPosition());
-		getParent()->addChild(powerFalled);
-	}
+	
 
 	//移除自己
 	this->removeFromParent();

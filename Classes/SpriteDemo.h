@@ -6,6 +6,7 @@
 #include "Item.h"
 #include "HeroSprite.h"
 #include "SwordMan.h"
+#include "Box.h"
 USING_NS_CC;
 
 class MyWorld : public cocos2d::Layer {
@@ -33,6 +34,11 @@ public:
 
 	//全场的能量power
 	Vector<Sprite*> powerInTheWorld;
+
+
+	//box
+	Box* box1;
+	bool isBox1Dead;
 
 };
 
