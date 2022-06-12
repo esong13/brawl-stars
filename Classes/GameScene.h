@@ -2,8 +2,6 @@
 #include <iostream>
 #include <vector>
 #include "cocos2d.h" 
-#include "Myscene.h" 
-#include "My2scene.h" 
 #include "stop.h" 
 #include "SoundSet.h" 
 #include "AudioEngine.h"
@@ -85,5 +83,6 @@ private:
 	Box* box2;
 	Sprite* Hero;
 	Sprite* FHero;
+	int GameScenemp3;
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;
 };

@@ -20,7 +20,7 @@ bool Game::init()
     }
 	this->scheduleUpdate();
     //set the background music and it volume
-   
+	int GameScenemp3 = AudioEngine::play2d("GameScene.mp3", true);
 
     //initialize the map
 	
@@ -121,7 +121,7 @@ bool Game::init()
 
 void Game::EnterSoundSet(Ref* p)/*ÇÐ»»³¡¾°*/
 {
-    Director::getInstance()->pushScene( SoundSet::createScene());
+    Director::getInstance()->pushScene( SoundSet::createScene(GameScenemp3));
 }
 void Game::EnterStop(Ref* p)/*ÔÝÍ£*/
 {
