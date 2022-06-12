@@ -22,11 +22,18 @@ public:
 
 	int direction;
 
-
+	//¼üÅÌ¼àÌıÆ÷
 	void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 	void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
-	//void EnterSoundSet(Ref* p);
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;
+	//Êó±ê¼àÌıÆ÷
+	EventListenerTouchOneByOne* listener;
+	//´¥ÆÁÊÂ¼ş
+	virtual bool onTouchBegan(Touch* touch, Event* event);
+	//virtual void onTouchMoved(Touch* touch, Event* event);
+	//virtual void onTouchEnded(Touch* touch, Event* event);
+
+
 	void update(float dt);
 	//µ¯Ò©»Ö¸´¶¨Ê±Æ÷
 	void bulletBackUpdate(float dt);

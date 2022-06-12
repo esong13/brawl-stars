@@ -114,8 +114,9 @@ bool MyWorld::init()
 
 
     this->scheduleUpdate();
-    auto keyListener = EventListenerKeyboard::create();
 
+    //键盘监听器
+    auto keyListener = EventListenerKeyboard::create();
     keyListener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event) {
         keyMap[keyCode] = true;
         switch (keyCode) {
@@ -135,10 +136,18 @@ bool MyWorld::init()
     };
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
 
+    //鼠标监听器
+    listener = EventListenerTouchOneByOne::create();
+    //绑定监听事件
+    listener->onTouchBegan = CC_CALLBACK_2(MyWorld::onTouchBegan, this);
+    //listener->onTouchMoved = CC_CALLBACK_2(MyWorld::onTouchMoved, this);
+    //listener->onTouchEnded = CC_CALLBACK_2(MyWorld::onTouchEnded, this);
+    listener->setSwallowTouches(true);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 	return true;
 }
 
-
+//鼠标点击攻击
 void MyWorld::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
     keyMap[keyCode] = true;
@@ -158,6 +167,17 @@ void MyWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
     keyMap[keyCode] = false;
 }
 
+
+bool MyWorld::onTouchBegan(Touch* touch, Event* event)
+{
+    //得到触屏点坐标
+    Point point = touch->getLocation();
+    if (!hero->getAttackIsColding()) {
+        scheduleOnce(CC_SCHEDULE_SELECTOR(MyWorld::attackCDUpdate), hero->getAttackCDTime());
+    }
+    hero->attack(point);
+    return true;
+}
 
 void MyWorld::update(float dt)
 {
@@ -190,14 +210,6 @@ void MyWorld::update(float dt)
     if (keyMap[s])
     {
         offsety = -1;
-    }
-    if (keyMap[j])//攻击，attack里面本应填写鼠标点击的地图坐标，类型为Point
-    {
-        if (!hero->getAttackIsColding()) {
-            scheduleOnce(CC_SCHEDULE_SELECTOR(MyWorld::attackCDUpdate), hero->getAttackCDTime());
-        }
-        hero->attack(hero->getPosition()+Point(offsetx, offsety)+hero->getRoleSprite()->getPosition());
-        
     }
     if (keyMap[q])//主动死亡
     {

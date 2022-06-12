@@ -120,7 +120,6 @@ void HeroSprite::update(float dt)
 	}
 	//判断子弹是否碰撞。。
 
-	//判断是否可能拾取buff
 
 
 
