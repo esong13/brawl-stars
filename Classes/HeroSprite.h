@@ -13,12 +13,14 @@ class HeroSprite :public Item {
 	//攻击
 	CC_SYNTHESIZE(int, attackNum, AttackNum);//攻击力
 	CC_SYNTHESIZE(bool, attackIsColding, AttackIsColding);//攻击冷却
+	CC_SYNTHESIZE(float, attackCDTime, AttackCDTime);//攻击冷却时间
 
 
 
 	//子弹量
 	CC_SYNTHESIZE(int, bulletMax, BulletMax);//弹药上限
 	CC_SYNTHESIZE(int, bulletNow, BulletNow);//当前弹药量
+
 
 	//大招能量
 	CC_SYNTHESIZE(int, skillEnergyNow, SkillEnergyNow);//当前大招能量
@@ -41,6 +43,7 @@ public:
 	//攻击部分
 	virtual void attack(Point targetPosition);
 
+
 	//弹药部分
 	Slider* createBulletBar();
 	void setBullet(Slider* theBulletBar,int bullet);
@@ -55,6 +58,8 @@ public:
 
 	//定时器
 	void update(float dt);
+
+
 protected:
 	//移动部分
 	Animate* createAnimate(int direction, const char* name, int num);//移动动画

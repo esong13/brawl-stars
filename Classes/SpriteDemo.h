@@ -9,6 +9,8 @@
 USING_NS_CC;
 
 class MyWorld : public cocos2d::Layer {
+	//来自GameScene的合并功能
+	//vector<int> _chosenPlayer = {};
 public:
 	SwordMan* hero;
 	bool heroIsDead;
@@ -26,10 +28,12 @@ public:
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;
 	void update(float dt);
 	//弹药恢复定时器
-	void attackUpdate(float dt);
+	void bulletBackUpdate(float dt);
+	void attackCDUpdate(float dt);
 
 	//全场的能量power
 	Vector<Sprite*> powerInTheWorld;
+
 };
 
 #endif

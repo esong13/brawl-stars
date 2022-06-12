@@ -1,7 +1,7 @@
 
 
 #include "SpriteDemo.h"
-
+#include "StartScene.h"
 
 
 
@@ -16,16 +16,38 @@ bool MyWorld::init()
 {
 	if (!Layer::init()) return false;
 
+
+    //来自GameScene的合并
+    //set the background music and it volume
+    auto backgroundAudioID = AudioEngine::play2d("GameScene.mp3", true);
+    AudioEngine::setVolume(backgroundAudioID, 0.3);
+
+    //initialize the map
+    auto map = TMXTiledMap::create("Map.tmx");
+
+    //sync the window size with the map
+    GLViewImpl* view = (GLViewImpl*)Director::getInstance()->getOpenGLView();
+    view->setWindowed(map->getContentSize().width * 3, map->getContentSize().height * 3);
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    //add the map to the center of the window
+    map->setAnchorPoint(Vec2(0.5, 0.5));
+    map->setPosition(Vec2(
+        origin.x + visibleSize.width / 2,
+        origin.y + visibleSize.height / 2));
+    this->addChild(map);
+
+    //auto visibleSize = Director::getInstance()->getVisibleSize();
+    //Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    
     auto* layer1 = Layer::create();
     auto* pBackground = Sprite::create("firstmap.png");
     pBackground->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     pBackground->setScale(0.8f);
     layer1->addChild(pBackground);
-    this->addChild(layer1);
-
+    this->addChild(layer1,-1);
+    
     //auto* layer2 = Layer::create();
     //rocker = HRocker::createHRocker("rocker.png", "rockerBG.png", Point(100, 100));
     //layer2->addChild(rocker);
@@ -44,9 +66,9 @@ bool MyWorld::init()
     this->heroIsDead = false;
     //test
 
-    hero->attack(hero->getPosition() + Point(20, 20)+ hero->getRoleSprite()->getPosition());//测试
+    //hero->attack(hero->getPosition() + Point(20, 20)+ hero->getRoleSprite()->getPosition());//测试
 
-    schedule(CC_SCHEDULE_SELECTOR(MyWorld::attackUpdate),2,40, 2.0f);
+    schedule(CC_SCHEDULE_SELECTOR(MyWorld::bulletBackUpdate), 2, 2000, 2.0f);
 
     /*
 	//创建一个精灵
@@ -158,11 +180,15 @@ void MyWorld::update(float dt)
     {
         offsety = -1;
     }
-    if (keyMap[j])
+    if (keyMap[j])//攻击，attack里面本应填写鼠标点击的地图坐标，类型为Point
     {
+        if (!hero->getAttackIsColding()) {
+            scheduleOnce(CC_SCHEDULE_SELECTOR(MyWorld::attackCDUpdate), hero->getAttackCDTime());
+        }
         hero->attack(hero->getPosition()+Point(offsetx, offsety)+hero->getRoleSprite()->getPosition());
+        
     }
-    if (keyMap[q])
+    if (keyMap[q])//主动死亡
     {
         hero->Dead();
         heroIsDead = true;
@@ -201,7 +227,12 @@ void MyWorld::update(float dt)
     hero->heroMoveTo(offsetx, offsety, hero->getMoveSpeed());
 }
 
-void MyWorld::attackUpdate(float dt)
+void MyWorld::bulletBackUpdate(float dt)
 {
     hero->setBullet(hero->bulletBar, hero->getBulletNow() + 1);
+}
+
+void MyWorld::attackCDUpdate(float dt)
+{
+    hero->setAttackIsColding(false);
 }

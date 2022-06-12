@@ -7,6 +7,7 @@ bool SwordMan::init()
 	setHealthPointMax(SWORDMAN_HP);//设置血量
 	setHealthPointNow(SWORDMAN_HP);
 	setMoveSpeed(SWORDMAN_SPEED);//设置移动速度
+	setAttackCDTime(SWORDMAN_ATTACKCDTIME);//设置攻速
 
 	return true;
 }
@@ -22,7 +23,8 @@ void SwordMan::attack(Point targetPosition)
 		return;
 	}
 	//攻击冷却
-	//attackIsColding = true;
+	setAttackIsColding(true);
+
 	//调用父类函数
 	HeroSprite::attack(targetPosition);
 
