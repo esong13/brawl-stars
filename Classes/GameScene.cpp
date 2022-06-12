@@ -18,11 +18,10 @@ bool Game::init()
 
     //initialize the map
     auto map = TMXTiledMap::create("Map.tmx");
-    map->setScale(0.335f);
 
     //sync the window size with the map
     GLViewImpl* view = (GLViewImpl*)Director::getInstance()->getOpenGLView();
-    view->setWindowed(map->getContentSize().width * 1.5, map->getContentSize().height * 1.5);
+    view->setWindowed(map->getContentSize().width * 3, map->getContentSize().height * 3);
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 

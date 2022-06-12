@@ -16,14 +16,14 @@ bool Start::init()
 
     //set the window size 2x the original background picture
     GLViewImpl* view = (GLViewImpl*)Director::getInstance()->getOpenGLView();
-    view->setWindowed(background->getContentSize().width * 2, background->getContentSize().height * 2);
+    view->setWindowed(background->getContentSize().width * 3, background->getContentSize().height * 3);
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     // position the background on the center of the window and let it fit the full window
     background->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
-    background->setScale(0.54f, 0.54f);
+    background->setScale(1.15f);
     // add the background as a child to this layer
     this->addChild(background, 0);
 
@@ -34,7 +34,6 @@ bool Start::init()
     //position the createRoomItem on the right upper side of the window
     createRoomItem->setAnchorPoint(Vec2(1, 0.5));
     createRoomItem->setPosition(Vec2(origin.x + visibleSize.width * 0.9, origin.y + visibleSize.height * 0.7));
-    createRoomItem->setScale(0.6f, 0.6f);
     auto menuCreateRoom = Menu::create(createRoomItem, NULL);
     menuCreateRoom->setPosition(Vec2::ZERO);
     this->addChild(menuCreateRoom, 1);
@@ -46,7 +45,6 @@ bool Start::init()
     //position the joinRoomItem on the right side of the window
     joinRoomItem->setAnchorPoint(Vec2(1, 0.5));
     joinRoomItem->setPosition(Vec2(origin.x + visibleSize.width * 0.9, origin.y + visibleSize.height * 0.5));
-    joinRoomItem->setScale(0.6f, 0.6f);
     auto menuJoinRoom = Menu::create(joinRoomItem, NULL);
     menuJoinRoom->setPosition(Vec2::ZERO);
     this->addChild(menuJoinRoom, 1);
@@ -58,7 +56,6 @@ bool Start::init()
     //position the settingsItem on the right lower side of the window
     settingsItem->setAnchorPoint(Vec2(1, 0.5));
     settingsItem->setPosition(Vec2(origin.x + visibleSize.width * 0.9, origin.y + visibleSize.height * 0.3));
-    settingsItem->setScale(0.6f, 0.6f);
     auto menuSettings = Menu::create(settingsItem, NULL);
     menuSettings->setPosition(Vec2::ZERO);
     this->addChild(menuSettings, 1);

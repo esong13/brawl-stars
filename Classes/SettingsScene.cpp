@@ -26,6 +26,7 @@ bool Settings::init()
 
     auto creditsTitle = Sprite::create("Credits.png");
     creditsTitle->setAnchorPoint(Vec2(0.5, 1));
+    creditsTitle->setScale(1.3f);
     creditsTitle->setPosition(Vec2(
         origin.x + visibleSize.width / 2,
         origin.y + visibleSize.height - backItem->getContentSize().height));
@@ -38,7 +39,7 @@ bool Settings::init()
         visibleSize.height - backItem->getContentSize().height - creditsTitle->getContentSize().height));
     scrollView->setInnerContainerSize(Size(
         visibleSize.width,
-        visibleSize.height));
+        visibleSize.height * 1.5));
     scrollView->setAnchorPoint(Vec2(0.5, 1));
     scrollView->setPosition(Vec2(
         origin.x + visibleSize.width / 2,
@@ -48,7 +49,7 @@ bool Settings::init()
     scrollView->setScrollBarColor(Color3B::WHITE);
    
     auto creditsContent = Sprite::create("CreditsContent.png");
-    creditsContent->setScale(0.3f, 0.3f);
+    creditsContent->setScale(0.8f);
     creditsContent->setAnchorPoint(Vec2(0.5, 1));
     creditsContent->setPosition(Vec2(scrollView->getInnerContainerSize().width / 2, scrollView->getInnerContainerSize().height));
     scrollView->addChild(creditsContent);
