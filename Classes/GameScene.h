@@ -81,6 +81,7 @@ private:
 	Sprite* obs13;
 	Box* box1;
 	Box* box2;
+	Box* box3;
 	Sprite* Hero;
 	Sprite* FHero;
 	int GameScenemp3;

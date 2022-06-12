@@ -207,6 +207,9 @@ void Game::thingsRectOn(Rect cr1,int action)
 	Rect cr12 = obs11->getBoundingBox();
 	Rect cr13 = obs12->getBoundingBox();
 	Rect cr14 = obs13->getBoundingBox();
+	Rect cr15 = box1->getBoundingBox();
+	Rect cr16 = box2->getBoundingBox();
+	Rect cr17 = box3->getBoundingBox();
 
 	if (cr1.intersectsRect(cr2)
 		|| cr1.intersectsRect(cr3)
@@ -220,7 +223,10 @@ void Game::thingsRectOn(Rect cr1,int action)
 		|| cr1.intersectsRect(cr11)
 		|| cr1.intersectsRect(cr12)
 		|| cr1.intersectsRect(cr13)
-		|| cr1.intersectsRect(cr14))	//是否存在交集
+		|| cr1.intersectsRect(cr14)
+		|| cr1.intersectsRect(cr15)
+		|| cr1.intersectsRect(cr16)
+		|| cr1.intersectsRect(cr17))	//是否存在交集
 	{
 		switch (action) {
 			case 1:
@@ -368,6 +374,34 @@ void Game::ObstacleCreate()
 	obs13 = Sprite::create("treelinex.png");
 	obs13->setPosition(17 * 32 - 10, 23 * 32 + 20);
 	_tilemap->addChild(obs13);
+
+	box1 = Box::create();
+	box1->bindSprite(Sprite::create("box.png"));
+	box1->setScale(2);
+	box1->setPosition(ROLENODE_POSITION_X -100, ROLENODE_POSITION_Y+50 );
+	box1->addHealthBar();
+	box1->healthBar->setPosition(box1->healthBar->getPosition() - Point(3, 14));
+
+	_tilemap->addChild(box1, 11);
+
+	box2 = Box::create();
+	box2->bindSprite(Sprite::create("box.png"));
+	box2->setScale(2);
+	box2->setPosition(ROLENODE_POSITION_X +60, ROLENODE_POSITION_Y + 50);
+	box2->addHealthBar();
+	box2->healthBar->setPosition(box2->healthBar->getPosition() - Point(3, 14));
+
+	_tilemap->addChild(box2, 11);
+
+	box3 = Box::create();
+	box3->bindSprite(Sprite::create("box.png"));
+	box3->setScale(2);
+	box3->setPosition(ROLENODE_POSITION_X - 100, ROLENODE_POSITION_Y - 50);
+	box3->addHealthBar();
+	box3->healthBar->setPosition(box3->healthBar->getPosition() - Point(3, 14));
+	_tilemap->addChild(box3, 11);
+
+	
 
 }
 void Game::bulletBackUpdate(float dt)
