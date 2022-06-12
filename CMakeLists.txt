@@ -58,10 +58,35 @@ endif()
 list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
      Classes/HelloWorldScene.cpp
+     Classes/StartScene.cpp
+     Classes/CreateRoomScene.cpp
+     Classes/JoinRoomScene.cpp
+     Classes/SettingsScene.cpp
+     Classes/GameScene.cpp
+     Classes/Box.cpp
+     Classes/Bullet.cpp
+     Classes/HeroSprite.cpp
+     Classes/HRocker.cpp
+     Classes/Item.cpp
+     Classes/SpriteDemo.cpp
+     Classes/SwordMan.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
      Classes/HelloWorldScene.h
+     Classes/StartScene.h
+     Classes/CreateRoomScene.h
+     Classes/JoinRoomScene.h
+     Classes/SettingsScene.h
+     Classes/GameScene.h
+     Classes/Box.h
+     Classes/Bullet.h
+     Classes/Const.h
+     Classes/HeroSprite.h
+     Classes/HRocker.h
+     Classes/Item.h
+     Classes/SpriteDemo.h
+     Classes/SwordMan.h
      )
 
 if(ANDROID)
